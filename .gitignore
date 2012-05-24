@@ -4,4 +4,4 @@ Makefile
 inc/
 MYMETA.json
 MYMETA.yml
-README.mkdn
+.DS_Store

@@ -1,7 +1,7 @@
 package Net::Jenkins;
 use strict;
 use warnings;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 use Net::Jenkins::Job;
 use Net::Jenkins::Job::Build;
 use Net::HTTP;
@@ -11,7 +11,7 @@ use methods;
 use URI;
 use JSON;
 
-has protocol => ( is => 'rw', isa => 'Str', default => 'http' );
+has scheme => ( is => 'rw', isa => 'Str', default => 'http' );
 
 has host => ( 
             is => 'rw', 
@@ -30,7 +30,7 @@ has user_agent => ( is => 'rw' , default => sub {
 });
 
 method get_base_url {
-    return $self->protocol 
+    return $self->scheme 
                 . '://' . $self->host 
                 . ':' . $self->port;
 }
@@ -124,17 +124,16 @@ method build_job ($job_name) {
 
 
 
-method get_job_config ($job_name) {
+method get_job_details ($job_name) {
     my $uri = $self->job_url($job_name) . '/api/json';
-    my $config = $self->get_json($uri);
-    return $config;
+    return $self->get_json($uri);
 }
 
 
 
 
 method get_builds ($job_name) {
-    my $config = $self->get_job_config($job_name);
+    my $config = $self->get_job_details($job_name);
     return @{ $config->{builds} };
 }
 
@@ -212,7 +211,7 @@ Net::Jenkins -
         # trigger a build
         $job->build;
 
-        my $config = $job->config;
+        my $details = $job->details;
         my $queue = $job->queue_item;
 
         sleep 1 while $job->in_queue ;
@@ -244,6 +243,8 @@ Net::Jenkins is
 Yo-An Lin E<lt>cornelius.howl {at} gmail.comE<gt>
 
 =head1 SEE ALSO
+
+L<Jenkins::Trigger>
 
 =head1 LICENSE
 
