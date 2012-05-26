@@ -1,7 +1,7 @@
 package Net::Jenkins;
 use strict;
 use warnings;
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 use Net::Jenkins::Job;
 use Net::Jenkins::Job::Build;
 use Net::HTTP;
@@ -59,7 +59,7 @@ method mode {
 }
 
 method jobs {
-    return map { Net::Jenkins::Job->new( %$_ , _api => $self ) } @{ $self->summary->{jobs} };
+    return map { Net::Jenkins::Job->new( %$_ , api => $self ) } @{ $self->summary->{jobs} };
 }
 
 method use_security {
