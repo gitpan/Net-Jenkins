@@ -1,7 +1,7 @@
 package Net::Jenkins;
 use strict;
 use warnings;
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 use Net::Jenkins::Job;
 use Net::Jenkins::Job::Build;
 use Net::HTTP;
@@ -123,10 +123,10 @@ method build_job ($job_name) {
 }
 
 
-
 method get_job_details ($job_name) {
-    my $uri = $self->job_url($job_name) . '/api/json';
-    return $self->get_json($uri);
+    return $self->get_json(
+        $self->job_url($job_name) . '/api/json'
+    );
 }
 
 
