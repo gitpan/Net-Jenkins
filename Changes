@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::Jenkins
 
+0.07    日  7/22 01:06:47 2012
+        - Provide with_builds flag for to_hashref method
+
 0.06    六  7/21 10:04:25 2012
         - Add with_details flag
 
